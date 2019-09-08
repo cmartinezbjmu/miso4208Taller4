@@ -30,8 +30,8 @@ function randomClick(monkeysLeft) {
     }   
 }
 
-function randomEvent(monkeysLeft1) {
-    
+function randomEvent(monkeysLeft1, time=5000) {
+    cy.wait(time);
     var monkeysLeft1 = monkeysLeft1;
     if(monkeysLeft1 > 0) {
         var randomEventSelect = Math.floor(Math.random() * 4);
@@ -60,8 +60,10 @@ function casesEvent(numberCase, monkeysLeft1) {
             }); 
             //console.log('000');
             monkeysLeft1 = monkeysLeft1 - 1;
-            cy.wait(1000);
-            randomEvent(monkeysLeft1);
+            
+            setTimeout(randomEvent(monkeysLeft1), 5000);
+            //randomEvent(monkeysLeft1);
+            
         break;
         case 1:
             // Llenar un campo de texto al azar
@@ -74,29 +76,40 @@ function casesEvent(numberCase, monkeysLeft1) {
             }); 
             console.log('111');
             monkeysLeft1 = monkeysLeft1 - 1;
-            randomEvent(monkeysLeft1);
+            setTimeout(randomEvent(monkeysLeft1), 5000);
+            //randomEvent(monkeysLeft1);
+            
         break;
         case 2:
             // Seleccionar un combo al azar
+            //cy.get('body').then((body) => { 
+              //  if (body.find('.warning').length > 0) { cy.get('#warn-dialog-submit').click(); 
+               // } 
+            //});
             cy.get('select>option').then($select => {
-                var randomSelect = $select.get(getRandomInt(0, $select.length));
-                console.log(randomSelect);
-                //if(!Cypress.dom.isHidden(randomSelect)) {
-                //    cy.get('option').then($option => {
-                //    var ramdomOption = $option.get(getRandomInt(0, $option.length));
-                //    console.log($option.length);
-                //    }
+                console.log($select.length)
+                    if ($select.length > 0) {
+                        var randomSelect = $select.get(getRandomInt(0, $select.length));
+                        console.log(randomSelect);
+                        //if(!Cypress.dom.isHidden(randomSelect)) {
+                        //    cy.get('option').then($option => {
+                        //    var ramdomOption = $option.get(getRandomInt(0, $option.length));
+                        //    console.log($option.length);
+                        //    }
+                        
+                        //cy.get(randomSelect).select();
+                        cy.get('select').eq(0).select(randomSelect.value);
+                        //console.log(algo.length);
+                        //  .select($select);
+                        //}
+                    }
                 
-                //cy.get(randomSelect).select();
-                cy.get('select').eq(0).select(randomSelect.value);
-                //console.log(algo.length);
-                  //  .select($select);
-                //}
             }); 
             console.log('222');
             monkeysLeft1 = monkeysLeft1 - 1;
-            cy.wait(1000);
-            randomEvent(monkeysLeft1);
+            setTimeout(randomEvent(monkeysLeft1), 5000);
+            //randomEvent(monkeysLeft1);
+            
         break;
         case 3:
             cy.get('button').then(($btn) => {
@@ -108,8 +121,11 @@ function casesEvent(numberCase, monkeysLeft1) {
             });
             //console.log('333'); 
             monkeysLeft1 = monkeysLeft1 - 1;
-            cy.wait(1000);
-            randomEvent(monkeysLeft1);
+            
+            setTimeout(randomEvent(monkeysLeft1), 5000);
+            //randomEvent(monkeysLeft1);
+            
         break;
     }    
+    
 }
